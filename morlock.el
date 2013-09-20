@@ -4,7 +4,7 @@
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Created: 20130624
-;; Version: 0.1.0
+;; Version: 0.1.1
 ;; Homepage: http://github.com/tarsius/morlock
 ;; Keywords: convenience
 
@@ -48,7 +48,7 @@
 (defconst morlock-el-font-lock-keywords
   (eval-when-compile
     `(;; Definitions.
-      ("(\\(defun-local\\)\\>[ \t]*\\(\\sw+\\)?"
+      ("(\\(defvar-local\\)\\>[ \t]*\\(\\sw+\\)?"
        (1 font-lock-keyword-face)
        (2 font-lock-function-name-face nil t))))
   "Fresh expressions to highlight in Emacs-Lisp mode.")
