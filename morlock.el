@@ -50,7 +50,7 @@
     `(;; Definitions.
       ("(\\(defvar-local\\)\\>[ \t]*\\(\\sw+\\)?"
        (1 font-lock-keyword-face)
-       (2 font-lock-function-name-face nil t))))
+       (2 font-lock-variable-name-face nil t))))
   "Fresh expressions to highlight in Emacs-Lisp mode.")
 
 (defconst morlock-cl-font-lock-keywords
