@@ -56,7 +56,7 @@
 (defconst morlock-cl-font-lock-keywords
   (eval-when-compile
     `(;; Definitions.
-      ("(\\(cl-def\\(?:un\\|macro\\)\\)\\>[ \t]*\\(\\sw+\\)?"
+      ("(\\(cl-def\\(?:un\\|macro\\|struct\\)\\)\\>[ \t]*\\(\\sw+\\)?"
        (1 font-lock-keyword-face)
        (2 font-lock-function-name-face nil t))
       ;; Control structures.
