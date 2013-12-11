@@ -4,7 +4,6 @@
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Created: 20130624
-;; Version: 0.1.1
 ;; Homepage: http://github.com/tarsius/morlock
 ;; Keywords: convenience
 
