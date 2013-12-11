@@ -33,13 +33,20 @@
 ;;     covered by the default keywords yet (?).
 ;; `morlock-cl-font-lock-keywords' expressions that used to be
 ;;     covered by the default keywords but aren't anymore since
-;;     the `cl-' prefix was added.
+;;     the `cl-' prefix was added.  And then some that never
+;;     were.
 ;; `morlock-font-lock-keywords' combines the above two.
 
-;; To use these keywords require `morlock' and activate the keywords
-;; in one of the variables using `font-lock-add-keywords'.  E.g.:
+;; To use `morlock-font-lock-keywords' in `emacs-lisp-mode' and
+;; `lisp-interaction-mode' enable `global-morlock-mode'.
 
-;; (font-lock-add-keywords 'emacs-lisp-mode morlock-font-lock-keywords)
+;; If you want to only enable one some of the keywords and/or only in
+;; `emacs-lisp-mode', then require `morlock' and activate the keywords
+;; in one of the variables using `font-lock-add-keywords'.  Doing so
+;; is also slightly more efficient.
+
+;;     (font-lock-add-keywords 'emacs-lisp-mode
+;;                              morlock-el-font-lock-keywords)
 
 ;; Please let me know if you think anything should be added here.
 
@@ -81,6 +88,23 @@
 This variable combines the keywords defined in
 `morlock-el-font-lock-keywords' and
 `morlock-cl-font-lock-keywords'.")
+
+;;;###autoload
+(define-minor-mode morlock-mode
+  "Highlight more font-lock keywords."
+  :lighter ""
+  (if morlock-mode
+      (font-lock-add-keywords  nil morlock-font-lock-keywords 'append)
+    (font-lock-remove-keywords nil morlock-font-lock-keywords))
+  (font-lock-fontify-buffer))
+
+;;;###autoload
+(define-globalized-minor-mode global-morlock-mode
+  hl-todo-mode turn-on-morlock-mode-if-desired)
+
+(defun turn-on-morlock-mode-if-desired ()
+  (when (derived-mode-p 'emacs-lisp-mode)
+    (morlock-mode 1)))
 
 (provide 'morlock)
 ;; Local Variables:
