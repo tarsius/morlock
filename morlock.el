@@ -54,7 +54,7 @@
 (defconst morlock-el-font-lock-keywords
   (eval-when-compile
     `(;; Definitions.
-      (,(concat "(\\(defvar-local\\)\\>"
+      (,(concat "(\\(def\\(?:var-local\\|ine-button-type\\)\\)\\>"
                 "[ \t'\(]*\\(\\sw+\\)?")
        (1 font-lock-keyword-face)
        (2 font-lock-variable-name-face nil t))))
