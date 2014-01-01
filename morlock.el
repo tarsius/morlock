@@ -1,6 +1,6 @@
 ;;; morlock.el --- more font-lock keywords for elisp
 
-;; Copyright (C) 2013  Jonas Bernoulli
+;; Copyright (C) 2013-2014  Jonas Bernoulli
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Created: 20130624
