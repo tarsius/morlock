@@ -30,16 +30,18 @@
 
 ;; `morlock-el-font-lock-keywords' new expressions that aren't
 ;;     covered by the default keywords yet (?).
+;; `morlock-op-font-lock-keywords' expressions that would be
+;;     operators in other languages: `or' `and' `not'
 ;; `morlock-cl-font-lock-keywords' expressions that used to be
 ;;     covered by the default keywords but aren't anymore since
 ;;     the `cl-' prefix was added.  And then some that never
 ;;     were.
-;; `morlock-font-lock-keywords' combines the above two.
+;; `morlock-font-lock-keywords' combines the above tree.
 
 ;; To use `morlock-font-lock-keywords' in `emacs-lisp-mode' and
 ;; `lisp-interaction-mode' enable `global-morlock-mode'.
 
-;; If you want to only enable one some of the keywords and/or only in
+;; If you want to only enable some of the keywords and/or only in
 ;; `emacs-lisp-mode', then require `morlock' and activate the keywords
 ;; in one of the variables using `font-lock-add-keywords'.  Doing so
 ;; is also slightly more efficient.
@@ -59,6 +61,9 @@
        (1 font-lock-keyword-face)
        (2 font-lock-variable-name-face nil t))))
   "Fresh expressions to highlight in Emacs-Lisp mode.")
+
+(defconst morlock-op-font-lock-keywords
+  '(("(\\(and\\|or\\|not\\)\\>" 1 font-lock-keyword-face)))
 
 (defconst morlock-cl-font-lock-keywords
   (eval-when-compile
@@ -84,10 +89,12 @@
 
 (defconst morlock-font-lock-keywords
   (append morlock-el-font-lock-keywords
+          morlock-op-font-lock-keywords
           morlock-cl-font-lock-keywords)
   "More expressions to highlight in Emacs-Lisp mode.
 This variable combines the keywords defined in
-`morlock-el-font-lock-keywords' and
+`morlock-el-font-lock-keywords',
+`morlock-op-font-lock-keywords', and
 `morlock-cl-font-lock-keywords'.")
 
 ;;;###autoload
