@@ -104,7 +104,8 @@ This variable combines the keywords defined in
   (if morlock-mode
       (font-lock-add-keywords  nil morlock-font-lock-keywords 'append)
     (font-lock-remove-keywords nil morlock-font-lock-keywords))
-  (font-lock-fontify-buffer))
+  (when (called-interactively-p 'any)
+    (font-lock-fontify-buffer)))
 
 ;;;###autoload
 (define-globalized-minor-mode global-morlock-mode
