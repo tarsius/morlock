@@ -109,7 +109,8 @@ This variable combines the keywords defined in
 
 ;;;###autoload
 (define-globalized-minor-mode global-morlock-mode
-  morlock-mode turn-on-morlock-mode-if-desired)
+  morlock-mode turn-on-morlock-mode-if-desired
+  :group 'font-lock-extra-types)
 
 (defun turn-on-morlock-mode-if-desired ()
   (when (derived-mode-p 'emacs-lisp-mode)
