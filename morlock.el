@@ -28,14 +28,13 @@
 
 ;; These keyword variables are available:
 
-;; `morlock-el-font-lock-keywords' new expressions that aren't
-;;     covered by the default keywords yet (?).
+;; `morlock-el-font-lock-keywords' expressions that aren't
+;;     covered by the default keywords.
 ;; `morlock-op-font-lock-keywords' expressions that would be
-;;     operators in other languages: `or' `and' `not'
+;;     operators in other languages: `or' `and' `not'.
 ;; `morlock-cl-font-lock-keywords' expressions that used to be
 ;;     covered by the default keywords but aren't anymore since
-;;     the `cl-' prefix was added.  And then some that never
-;;     were.
+;;     the `cl-' prefix was added.
 ;; `morlock-font-lock-keywords' combines the above tree.
 
 ;; To use `morlock-font-lock-keywords' in `emacs-lisp-mode' and
@@ -55,8 +54,7 @@
 
 (defconst morlock-el-font-lock-keywords
   (eval-when-compile
-    `(;; Definitions.
-      (,(concat "(\\(def\\(?:var-local\\|ine-button-type\\)\\)\\>"
+    `((,(concat "(\\(define-button-type\\)\\>"
                 "[ \t'\(]*\\(\\sw+\\)?")
        (1 font-lock-keyword-face)
        (2 font-lock-variable-name-face nil t))))
@@ -67,23 +65,8 @@
 
 (defconst morlock-cl-font-lock-keywords
   (eval-when-compile
-    `(;; Definitions.
-      (,(concat "(\\(cl-def\\(?:un\\|macro\\|struct\\)\\)\\>"
-                "[ \t'\(]*\\(\\sw+\\)?")
-       (1 font-lock-keyword-face)
-       (2 font-lock-function-name-face nil t))
-      ;; Control structures.
-      (,(concat
-         "(\\(cl-"
-         (regexp-opt
-          '("case" "ecase" "typecase" "etypecase"
-            "loop" "do" "do*" "dotimes" "dolist" "the" "locally"
-            "proclaim" "declaim" "declare" "symbol-macrolet" "letf"
-            "flet" "labels"
-            "destructuring-bind" "macrolet" "block"
-            "multiple-value-bind"
-            "return" "return-from"))
-         "\\)\\>")
+    `((,(concat "(\\(cl-" (regexp-opt '("dotimes" "dolist" "declare"))
+                "\\)\\>")
        . 1)))
   "Exiled expressions to highlight in Emacs-Lisp mode.")
 
