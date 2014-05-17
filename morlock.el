@@ -55,7 +55,8 @@
 (defconst morlock-el-font-lock-keywords
   (eval-when-compile
     `((,(concat "(\\(define-button-type\\)\\>"
-                "[ \t'\(]*\\(\\sw+\\)?")
+                "[ \t'\(]*"
+                "\\(\\(?:\\sw\\|\\s_\\)+\\)?")
        (1 font-lock-keyword-face)
        (2 font-lock-variable-name-face nil t))))
   "Fresh expressions to highlight in Emacs-Lisp mode.")
