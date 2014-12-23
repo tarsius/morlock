@@ -57,12 +57,12 @@
     `((,(concat "(\\(define-button-type\\)\\>"
                 "[ \t'\(]*"
                 "\\(\\(?:\\sw\\|\\s_\\)+\\)?")
-       (1 font-lock-keyword-face)
-       (2 font-lock-variable-name-face nil t))))
+       (1 'font-lock-keyword-face)
+       (2 'font-lock-variable-name-face nil t))))
   "Fresh expressions to highlight in Emacs-Lisp mode.")
 
 (defconst morlock-op-font-lock-keywords
-  '(("(\\(and\\|or\\|not\\)\\>" 1 font-lock-keyword-face)))
+  '(("(\\(and\\|or\\|not\\)\\>" 1 'font-lock-keyword-face)))
 
 (defconst morlock-cl-font-lock-keywords
   (eval-when-compile
