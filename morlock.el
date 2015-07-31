@@ -1,9 +1,8 @@
 ;;; morlock.el --- more font-lock keywords for elisp
 
-;; Copyright (C) 2013-2014  Jonas Bernoulli
+;; Copyright (C) 2013-2015  Jonas Bernoulli
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
-;; Created: 20130624
 ;; Homepage: http://github.com/tarsius/morlock
 ;; Keywords: convenience
 
@@ -89,7 +88,10 @@ This variable combines the keywords defined in
       (font-lock-add-keywords  nil morlock-font-lock-keywords 'append)
     (font-lock-remove-keywords nil morlock-font-lock-keywords))
   (when (called-interactively-p 'any)
-    (font-lock-fontify-buffer)))
+    (if (fboundp 'font-lock-ensure)
+        (font-lock-ensure)
+      (with-no-warnings
+        (font-lock-fontify-buffer)))))
 
 ;;;###autoload
 (define-globalized-minor-mode global-morlock-mode
