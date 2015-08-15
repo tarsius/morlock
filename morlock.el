@@ -88,8 +88,8 @@ This variable combines the keywords defined in
       (font-lock-add-keywords  nil morlock-font-lock-keywords 'append)
     (font-lock-remove-keywords nil morlock-font-lock-keywords))
   (when (called-interactively-p 'any)
-    (if (fboundp 'font-lock-ensure)
-        (font-lock-ensure)
+    (if (fboundp 'font-lock-flush)
+        (font-lock-flush)
       (with-no-warnings
         (font-lock-fontify-buffer)))))
 
