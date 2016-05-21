@@ -1,6 +1,6 @@
 ;;; morlock.el --- more font-lock keywords for elisp
 
-;; Copyright (C) 2013-2015  Jonas Bernoulli
+;; Copyright (C) 2013-2016  Jonas Bernoulli
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Homepage: http://github.com/tarsius/morlock
@@ -87,9 +87,13 @@ This variable combines the keywords defined in
   (if morlock-mode
       (font-lock-add-keywords  nil morlock-font-lock-keywords 'append)
     (font-lock-remove-keywords nil morlock-font-lock-keywords))
-  (when (called-interactively-p 'any)
-    (if (fboundp 'font-lock-flush)
-        (font-lock-flush)
+  (when font-lock-mode
+    (if (and (fboundp 'font-lock-flush)
+             (fboundp 'font-lock-ensure))
+        (save-restriction
+          (widen)
+          (font-lock-flush)
+          (font-lock-ensure))
       (with-no-warnings
         (font-lock-fontify-buffer)))))
 
