@@ -3,7 +3,7 @@
 ;; Copyright (C) 2013-2016  Jonas Bernoulli
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
-;; Homepage: http://github.com/tarsius/morlock
+;; Homepage: https://github.com/tarsius/morlock
 ;; Keywords: convenience
 
 ;; This file is not part of GNU Emacs.
