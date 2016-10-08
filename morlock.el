@@ -1,4 +1,4 @@
-;;; morlock.el --- more font-lock keywords for elisp
+;;; morlock.el --- more font-lock keywords for elisp  -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2013-2016  Jonas Bernoulli
 
