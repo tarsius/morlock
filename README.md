@@ -8,7 +8,7 @@ These keyword variables are available:
 * `morlock-el-font-lock-keywords` expressions that aren't
   covered by the default keywords.
 * `morlock-op-font-lock-keywords` expressions that would be
-  operators in other languages: `or`, `and` and `not`.
+  operators in other languages: `or`, `xor`, `and` and `not`.
 * `morlock-cl-font-lock-keywords` expressions that used to be
   covered by the default keywords but aren't anymore since
   the `cl-` prefix was added.
