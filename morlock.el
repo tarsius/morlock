@@ -47,8 +47,6 @@
 ;;     (font-lock-add-keywords 'emacs-lisp-mode
 ;;                              morlock-el-font-lock-keywords)
 
-;; Please let me know if you think anything should be added here.
-
 ;;; Code:
 
 (defconst morlock-el-font-lock-keywords
