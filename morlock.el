@@ -5,6 +5,7 @@
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Homepage: https://github.com/tarsius/morlock
 ;; Keywords: convenience
+;; Package-Requires: ((emacs "25.1") (compat "28.1.1.0"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -48,6 +49,8 @@
 ;;                              morlock-el-font-lock-keywords)
 
 ;;; Code:
+
+(require 'compat)
 
 (defconst morlock-el-font-lock-keywords
   (eval-when-compile
