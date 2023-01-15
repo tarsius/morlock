@@ -24,3 +24,8 @@ is also slightly more efficient.
 #+begin_src emacs-lisp
   (font-lock-add-keywords 'emacs-lisp-mode morlock-el-font-lock-keywords)
 #+end_src
+
+#+html: <br><br>
+#+html: <a href="https://github.com/tarsius/morlock/actions/workflows/compile.yml"><img alt="Compile" src="https://github.com/tarsius/morlock/actions/workflows/compile.yml/badge.svg"/></a>
+#+html: <a href="https://stable.melpa.org/#/morlock"><img alt="MELPA Stable" src="https://stable.melpa.org/packages/morlock-badge.svg"/></a>
+#+html: <a href="https://melpa.org/#/morlock"><img alt="MELPA" src="https://melpa.org/packages/morlock-badge.svg"/></a>
