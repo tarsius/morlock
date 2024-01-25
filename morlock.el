@@ -55,7 +55,7 @@
 
 (defconst morlock-el-font-lock-keywords
   (eval-when-compile
-    `((,(concat "(\\(define-button-type\\)\\>"
+    `((,(concat "(\\(define-button-type\\)\\_>"
                 "[ \t'\(]*"
                 "\\(\\(?:\\sw\\|\\s_\\)+\\)?")
        (1 'font-lock-keyword-face)
@@ -63,12 +63,12 @@
   "Fresh expressions to highlight in Emacs-Lisp mode.")
 
 (defconst morlock-op-font-lock-keywords
-  '(("(\\(or\\|xor\\|and\\|not\\)\\>" 1 'font-lock-keyword-face)))
+  '(("(\\(or\\|xor\\|and\\|not\\)\\_>" 1 'font-lock-keyword-face)))
 
 (defconst morlock-cl-font-lock-keywords
   (eval-when-compile
     `((,(concat "(\\(cl-" (regexp-opt '("dotimes" "dolist" "declare"))
-                "\\)\\>")
+                "\\)\\_>")
        . 1)))
   "Exiled expressions to highlight in Emacs-Lisp mode.")
 
