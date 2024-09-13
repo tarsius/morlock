@@ -34,10 +34,7 @@
 ;;     covered by the default keywords.
 ;; `morlock-op-font-lock-keywords' expressions that would be
 ;;     operators in other languages: `or', `xor', `and' and `not'.
-;; `morlock-cl-font-lock-keywords' expressions that used to be
-;;     covered by the default keywords but aren't anymore since
-;;     the `cl-' prefix was added.
-;; `morlock-font-lock-keywords' combines the above three.
+;; `morlock-font-lock-keywords' combines the above two.
 
 ;; To use `morlock-font-lock-keywords' in `emacs-lisp-mode' and
 ;; `lisp-interaction-mode' enable `global-morlock-mode'.
@@ -67,22 +64,12 @@
 (defconst morlock-op-font-lock-keywords
   '(("(\\(or\\|xor\\|and\\|not\\)\\_>" 1 'font-lock-keyword-face)))
 
-(defconst morlock-cl-font-lock-keywords
-  (eval-when-compile
-    `((,(concat "(\\(cl-" (regexp-opt '("dotimes" "dolist" "declare"))
-                "\\)\\_>")
-       . 1)))
-  "Exiled expressions to highlight in Emacs-Lisp mode.")
-
 (defconst morlock-font-lock-keywords
   (append morlock-el-font-lock-keywords
-          morlock-op-font-lock-keywords
-          morlock-cl-font-lock-keywords)
+          morlock-op-font-lock-keywords)
   "More expressions to highlight in Emacs-Lisp mode.
 This variable combines the keywords defined in
-`morlock-el-font-lock-keywords',
-`morlock-op-font-lock-keywords', and
-`morlock-cl-font-lock-keywords'.")
+`morlock-el-font-lock-keywords' and `morlock-op-font-lock-keywords'.")
 
 ;;;###autoload
 (define-minor-mode morlock-mode
