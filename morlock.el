@@ -29,7 +29,7 @@
 ;; This library defines more font-lock keywords for Emacs Lisp.
 
 ;; These keyword variables are available:
-
+;;
 ;; `morlock-el-font-lock-keywords' expressions that aren't
 ;;     covered by the default keywords.
 ;; `morlock-op-font-lock-keywords' expressions that would be
@@ -46,7 +46,7 @@
 ;; `emacs-lisp-mode', then require `morlock' and activate the keywords
 ;; in one of the variables using `font-lock-add-keywords'.  Doing so
 ;; is also slightly more efficient.
-
+;;
 ;;     (font-lock-add-keywords 'emacs-lisp-mode
 ;;                              morlock-el-font-lock-keywords)
 
@@ -101,7 +101,6 @@ This variable combines the keywords defined in
   (when (derived-mode-p 'emacs-lisp-mode)
     (morlock-mode 1)))
 
-;;; _
 (provide 'morlock)
 ;; Local Variables:
 ;; indent-tabs-mode: nil
