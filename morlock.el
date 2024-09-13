@@ -33,7 +33,7 @@
 ;; `morlock-el-font-lock-keywords' expressions that aren't
 ;;     covered by the default keywords.
 ;; `morlock-op-font-lock-keywords' expressions that would be
-;;     operators in other languages: `xor' and `not'.
+;;     operators in other languages: `xor', `not' and `null'.
 ;; `morlock-font-lock-keywords' combines the above two.
 
 ;; To use `morlock-font-lock-keywords' in `emacs-lisp-mode' and
@@ -62,7 +62,7 @@
   "Fresh expressions to highlight in Emacs-Lisp mode.")
 
 (defconst morlock-op-font-lock-keywords
-  '(("(\\(xor\\|not\\)\\_>" 1 'font-lock-keyword-face)))
+  '(("(\\(xor\\|not\\|null\\)\\_>" 1 'font-lock-keyword-face)))
 
 (defconst morlock-font-lock-keywords
   (append morlock-el-font-lock-keywords
