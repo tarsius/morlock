@@ -56,7 +56,8 @@
 
 (defconst morlock-el-font-lock-keywords
   (eval-when-compile
-    `((,(concat "(\\(define-button-type\\)\\_>"
+    `(("(\\(with-no-warnings\\)\\_>" 1 'font-lock-keyword-face)
+      (,(concat "(\\(define-button-type\\)\\_>"
                 "[ \t'\(]*"
                 "\\(\\(?:\\sw\\|\\s_\\)+\\)?")
        (1 'font-lock-keyword-face)
