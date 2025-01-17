@@ -1,13 +1,13 @@
 ;;; morlock.el --- More font-lock keywords for elisp  -*- lexical-binding:t -*-
 
-;; Copyright (C) 2013-2024 Jonas Bernoulli
+;; Copyright (C) 2013-2025 Jonas Bernoulli
 
 ;; Author: Jonas Bernoulli <emacs.morlock@jonas.bernoulli.dev>
 ;; Homepage: https://github.com/tarsius/morlock
 ;; Keywords: convenience
 
 ;; Package-Version: 1.2.0
-;; Package-Requires: ((emacs "26.1") (compat "30.0.0.0"))
+;; Package-Requires: ((emacs "29.1"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -26,68 +26,58 @@
 
 ;;; Commentary:
 
-;; This library defines more font-lock keywords for Emacs Lisp.
+;; This package provides `morlock-mode' which highlights additional
+;; expressions in Emacs Lisp mode.
 
-;; These keyword variables are available:
-;;
-;; `morlock-el-font-lock-keywords' expressions that aren't
-;;     covered by the default keywords.
-;; `morlock-op-font-lock-keywords' expressions that would be
-;;     operators in other languages: `xor', `not' and `null'.
-;; `morlock-font-lock-keywords' combines the above two.
+;; Symbols are highlighted if their `morlock-font-lock-keyword' symbol
+;; property is non-nil.  This package does this for a few symbols, and
+;; you can do it yourself for additional symbols.
 
-;; To use `morlock-font-lock-keywords' in `emacs-lisp-mode' and
-;; `lisp-interaction-mode' enable `global-morlock-mode'.
-
-;; If you want to only enable some of the keywords and/or only in
-;; `emacs-lisp-mode', then require `morlock' and activate the keywords
-;; in one of the variables using `font-lock-add-keywords'.  Doing so
-;; is also slightly more efficient.
-;;
-;;     (font-lock-add-keywords 'emacs-lisp-mode
-;;                              morlock-el-font-lock-keywords)
+;; The `morlock-font-lock-keywords' variable is used for more complex
+;; expressions.
 
 ;;; Code:
 
-(require 'compat)
+(defvar morlock-font-lock-symbols
+  '( not null xor
+     with-no-warnings
+     )
+  "More symbols to highlight in Emacs Lisp mode.")
 
-(defconst morlock-el-font-lock-keywords
+(defvar morlock-font-lock-keywords
   (eval-when-compile
-    `(("(\\(with-no-warnings\\)\\_>" 1 'font-lock-keyword-face)
-      (,(concat "(\\(define-button-type\\)\\_>"
+    `((,(concat "(\\(define-button-type\\)\\_>"
                 "[ \t'\(]*"
                 "\\(\\(?:\\sw\\|\\s_\\)+\\)?")
        (1 'font-lock-keyword-face)
        (2 'font-lock-variable-name-face nil t))))
-  "Fresh expressions to highlight in Emacs-Lisp mode.")
+  "More expressions to highlight in Emacs Lisp mode.")
 
-(defconst morlock-op-font-lock-keywords
-  '(("(\\(xor\\|not\\|null\\)\\_>" 1 'font-lock-keyword-face)))
-
-(defconst morlock-font-lock-keywords
-  (append morlock-el-font-lock-keywords
-          morlock-op-font-lock-keywords)
-  "More expressions to highlight in Emacs-Lisp mode.
-This variable combines the keywords defined in
-`morlock-el-font-lock-keywords' and `morlock-op-font-lock-keywords'.")
+(define-advice lisp--el-match-keyword (:override (limit) morlock)
+  (catch 'found
+    (while (re-search-forward
+            (concat "(\\(" (rx lisp-mode-symbol) "\\)\\_>")
+            limit t)
+      (let ((sym (intern-soft (match-string 1))))
+        (when (and (or (special-form-p sym)
+                       (macrop sym)
+                       (get sym 'morlock-font-lock-keyword))
+                   (not (get sym 'no-font-lock-keyword))
+                   (lisp--el-funcall-position-p (match-beginning 0)))
+          (throw 'found t))))))
 
 ;;;###autoload
 (define-minor-mode morlock-mode
-  "Highlight more font-lock keywords."
+  "Highlight more expressions in Emacs Lisp mode."
   :lighter ""
-  (if morlock-mode
-      (font-lock-add-keywords  nil morlock-font-lock-keywords 'append)
-    (font-lock-remove-keywords nil morlock-font-lock-keywords))
-  (font-lock-flush))
-
-;;;###autoload
-(define-globalized-minor-mode global-morlock-mode
-  morlock-mode morlock-mode--turn-on
-  :group 'font-lock-extra-types)
-
-(defun morlock-mode--turn-on ()
-  (when (derived-mode-p 'emacs-lisp-mode)
-    (morlock-mode 1)))
+  :group 'font-lock
+  :global t
+  (cond
+   (morlock-mode
+    (dolist (symbol morlock-font-lock-symbols)
+      (put symbol 'morlock-font-lock-keyword t))
+    (font-lock-add-keywords    'emacs-lisp-mode morlock-font-lock-keywords t))
+   ((font-lock-remove-keywords 'emacs-lisp-mode morlock-font-lock-keywords))))
 
 (provide 'morlock)
 ;; Local Variables:
