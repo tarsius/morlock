@@ -6,7 +6,7 @@
 ;; Homepage: https://github.com/tarsius/morlock
 ;; Keywords: convenience
 
-;; Package-Version: 1.2.0
+;; Package-Version: 2.0.0
 ;; Package-Requires: ((emacs "29.1"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
