@@ -76,8 +76,19 @@
    (morlock-mode
     (dolist (symbol morlock-font-lock-symbols)
       (put symbol 'morlock-font-lock-keyword t))
-    (font-lock-add-keywords    'emacs-lisp-mode morlock-font-lock-keywords t))
-   ((font-lock-remove-keywords 'emacs-lisp-mode morlock-font-lock-keywords))))
+    (add-hook 'emacs-lisp-mode-hook #'morlock--add-font-lock-keywords))
+   (t
+    (remove-hook 'emacs-lisp-mode-hook #'morlock--add-font-lock-keywords)))
+  (dolist (buffer (buffer-list))
+    (with-current-buffer buffer
+      (when (derived-mode-p 'emacs-lisp-mode)
+        (if morlock-mode
+            (font-lock-add-keywords  nil morlock-font-lock-keywords t)
+          (font-lock-remove-keywords nil morlock-font-lock-keywords))
+        (font-lock-flush)))))
+
+(defun morlock--add-font-lock-keywords ()
+  (font-lock-add-keywords nil morlock-font-lock-keywords t))
 
 (provide 'morlock)
 ;; Local Variables:
