@@ -53,7 +53,8 @@
        (2 'font-lock-variable-name-face nil t))))
   "More expressions to highlight in Emacs Lisp mode.")
 
-(define-advice lisp--el-match-keyword (:override (limit) morlock)
+(defun lisp--el-match-keyword@morlock (limit)
+  "Highlight keywords whose `morlock-font-lock-keyword' property is non-nil."
   (catch 'found
     (while (re-search-forward
             (concat "(\\(" (rx lisp-mode-symbol) "\\)\\_>")
@@ -76,8 +77,12 @@
    (morlock-mode
     (dolist (symbol morlock-font-lock-symbols)
       (put symbol 'morlock-font-lock-keyword t))
+    (advice-add 'lisp--el-match-keyword :override
+                #'lisp--el-match-keyword@morlock)
     (add-hook 'emacs-lisp-mode-hook #'morlock--add-font-lock-keywords))
    (t
+    (advice-remove 'lisp--el-match-keyword
+                   #'lisp--el-match-keyword@morlock)
     (remove-hook 'emacs-lisp-mode-hook #'morlock--add-font-lock-keywords)))
   (dolist (buffer (buffer-list))
     (with-current-buffer buffer
