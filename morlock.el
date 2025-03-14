@@ -39,9 +39,7 @@
 ;;; Code:
 
 (defvar morlock-font-lock-symbols
-  '( not null xor
-     with-no-warnings
-     )
+  '(not null xor with-no-warnings)
   "More symbols to highlight in Emacs Lisp mode.")
 
 (defvar morlock-font-lock-keywords
