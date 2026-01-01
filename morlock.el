@@ -73,16 +73,16 @@
   :group 'font-lock
   :global t
   (cond
-   (morlock-mode
-    (dolist (symbol morlock-font-lock-symbols)
-      (put symbol 'morlock-font-lock-keyword t))
-    (advice-add 'lisp--el-match-keyword :override
-                #'lisp--el-match-keyword@morlock)
-    (add-hook 'emacs-lisp-mode-hook #'morlock--add-font-lock-keywords))
-   (t
-    (advice-remove 'lisp--el-match-keyword
-                   #'lisp--el-match-keyword@morlock)
-    (remove-hook 'emacs-lisp-mode-hook #'morlock--add-font-lock-keywords)))
+    (morlock-mode
+     (dolist (symbol morlock-font-lock-symbols)
+       (put symbol 'morlock-font-lock-keyword t))
+     (advice-add 'lisp--el-match-keyword :override
+                 #'lisp--el-match-keyword@morlock)
+     (add-hook 'emacs-lisp-mode-hook #'morlock--add-font-lock-keywords))
+    (t
+     (advice-remove 'lisp--el-match-keyword
+                    #'lisp--el-match-keyword@morlock)
+     (remove-hook 'emacs-lisp-mode-hook #'morlock--add-font-lock-keywords)))
   (dolist (buffer (buffer-list))
     (with-current-buffer buffer
       (when (derived-mode-p 'emacs-lisp-mode)
@@ -97,5 +97,6 @@
 (provide 'morlock)
 ;; Local Variables:
 ;; indent-tabs-mode: nil
+;; lisp-indent-local-overrides: ((cond . 0) (interactive . 0))
 ;; End:
 ;;; morlock.el ends here
