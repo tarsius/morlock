@@ -1,6 +1,6 @@
 ;;; morlock.el --- More font-lock keywords for elisp  -*- lexical-binding:t -*-
 
-;; Copyright (C) 2013-2025 Jonas Bernoulli
+;; Copyright (C) 2013-2026 Jonas Bernoulli
 
 ;; Author: Jonas Bernoulli <emacs.morlock@jonas.bernoulli.dev>
 ;; Homepage: https://github.com/tarsius/morlock
