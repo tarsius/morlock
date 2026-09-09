@@ -29,13 +29,18 @@
 ;; This package provides `morlock-mode' which highlights additional
 ;; expressions in Emacs Lisp mode.
 
-;; Symbols are highlighted if their `morlock-font-lock-keyword' symbol
-;; property is non-nil.  This package does that for symbols listed in
-;; `morlock-font-lock-symbols'.  To highlight additional symbols either
-;; add them to that list or set that symbol property directly.
+;; Symbols are highlighted if their `font-lock-keyword' symbol
+;; property is non-nil.  This package does that for symbols listed
+;; in `morlock-font-lock-symbols'.  To highlight additional symbols
+;; either add them to that list or set that symbol property directly.
 
 ;; The `morlock-font-lock-keywords' variable is used for more complex
 ;; expressions.
+
+;; When using Emacs 32, this package can be replaced with just:
+;;
+;;   (dolist (sym '(not null xor with-no-warnings))
+;;     (put symbol 'font-lock-keyword t))
 
 ;;; Code:
 
@@ -53,15 +58,17 @@
   "More expressions to highlight in Emacs Lisp mode.")
 
 (defun lisp--el-match-keyword@morlock (limit)
-  "Highlight keywords whose `morlock-font-lock-keyword' property is non-nil."
+  "Highlight keywords whose `font-lock-keyword' property is non-nil."
   (catch 'found
     (while (re-search-forward
             (concat "(\\(" (rx lisp-mode-symbol) "\\)\\_>")
             limit t)
-      (let ((sym (intern-soft (match-string 1))))
+      (let ((sym (if (fboundp 'shorthands-intern-soft) ;~= 32.0.50
+                     (shorthands-intern-soft (match-string 1))
+                   (intern-soft (match-string 1)))))
         (when (and (or (special-form-p sym)
                        (macrop sym)
-                       (get sym 'morlock-font-lock-keyword))
+                       (get sym 'font-lock-keyword))
                    (not (get sym 'no-font-lock-keyword))
                    (lisp--el-funcall-position-p (match-beginning 0)))
           (throw 'found t))))))
@@ -75,13 +82,15 @@
   (cond
     (morlock-mode
      (dolist (symbol morlock-font-lock-symbols)
-       (put symbol 'morlock-font-lock-keyword t))
-     (advice-add 'lisp--el-match-keyword :override
-                 #'lisp--el-match-keyword@morlock)
+       (put symbol 'font-lock-keyword t))
+     (when (>= emacs-major-version 32)
+       (advice-add 'lisp--el-match-keyword :override
+                   #'lisp--el-match-keyword@morlock))
      (add-hook 'emacs-lisp-mode-hook #'morlock--add-font-lock-keywords))
     (t
-     (advice-remove 'lisp--el-match-keyword
-                    #'lisp--el-match-keyword@morlock)
+     (when (>= emacs-major-version 32)
+       (advice-remove 'lisp--el-match-keyword
+                      #'lisp--el-match-keyword@morlock))
      (remove-hook 'emacs-lisp-mode-hook #'morlock--add-font-lock-keywords)))
   (dolist (buffer (buffer-list))
     (with-current-buffer buffer
