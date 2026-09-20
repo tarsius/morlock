@@ -39,7 +39,8 @@
 
 ;; When using Emacs 32, this package can be replaced with just:
 ;;
-;;   (dolist (sym '(not null xor)) (put symbol 'font-lock-keyword t))
+;;   (dolist (symbol '(not null xor))
+;;     (put symbol 'font-lock-keyword t))
 
 ;;; Code:
 
